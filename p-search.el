@@ -3490,6 +3490,7 @@ register to which the preset value will be saved."
   (setq-local bookmark-make-record-function #'p-search--make-bookmark)
   )
 
+;;;###autoload
 (defun p-search (prefix)
   "Start a p-search session.
 
