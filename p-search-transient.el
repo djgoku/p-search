@@ -1,4 +1,4 @@
-;;; p-search-transient.el --- Support for transients -*- lexical-binding:t -*-
+;;; p-search-transient.el --- Support for transients -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;;; Commentary:
 
@@ -69,7 +69,7 @@ INIT and HIST the initial value and input history respectively."
 
 (cl-defmethod transient-infix-value ((obj p-search--option))
   "Return value of OBJ, being a cons pair of its symbol and value."
-  (when-let ((value (oref obj value)))
+  (when-let* ((value (oref obj value)))
       (cons
        (oref obj option-symbol)
        (oref obj value))))
@@ -252,7 +252,7 @@ objects `default-value' slot."
 
 (cl-defmethod transient-init-value ((obj p-search--choices))
   (cl-call-next-method)
-  (when-let (init-value (and (slot-boundp obj 'init-choice) (oref obj init-choice)))
+  (when-let* (init-value (and (slot-boundp obj 'init-choice) (oref obj init-choice)))
     (oset obj value init-value))) ;; TODO - do I need init-choice
 
 (cl-defmethod transient-infix-read ((obj p-search--choices))
@@ -275,7 +275,7 @@ objects `default-value' slot."
 
 (cl-defmethod transient-init-value ((obj p-search--toggle))
   (cl-call-next-method)
-  (when-let (init-value (and (slot-boundp obj 'init-state) (oref obj init-state)))
+  (when-let* (init-value (and (slot-boundp obj 'init-state) (oref obj init-state)))
     (oset obj value init-value)))
 
 (cl-defmethod transient-infix-read ((obj p-search--toggle))

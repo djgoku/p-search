@@ -1,4 +1,4 @@
-;;; p-search-query.el --- Support for querys -*- lexical-binding:t -*-
+;;; p-search-query.el --- Support for querys -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;;; Commentary:
 

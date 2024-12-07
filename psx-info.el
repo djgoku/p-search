@@ -1,4 +1,4 @@
-;;; psx-info.el --- Emacs Search Tool Aggregator -*- lexical-binding: t; -*-
+;;; psx-info.el --- Emacs Search Tool Aggregator -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;;; Commentary:
 
