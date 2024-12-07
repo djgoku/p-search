@@ -2006,6 +2006,7 @@ use it as the :default-value slot."
 
 (defun p-search-transient-dispatcher () "Placeholder for transient dispatch.")
 
+;;;###autoload
 (defun p-search-dispatch-transient (&rest config)
   "Dispatch an ad-hoc transient from CONFIG.
 CONFIG should be provided simmilar to how `transient-define-prefix' is used."
@@ -3194,6 +3195,7 @@ If PRESET is non-nil, set up session with PRESET."
 
 ;;; Commands
 
+;;;###autoload
 (defun p-search-toggle-section ()
   "Toggle the visibility of the section under the point."
   (interactive)
@@ -3203,6 +3205,7 @@ If PRESET is non-nil, set up session with PRESET."
           (p-search-reveal-section ov)
         (p-search-occlude-section ov)))))
 
+;;;###autoload
 (defun p-search-add-prior ()
   "Add a new prior to the current session."
   (interactive)
@@ -3210,6 +3213,7 @@ If PRESET is non-nil, set up session with PRESET."
     (error "No current p-search session found"))
   (p-search-dispatch-select-prior))
 
+;;;###autoload
 (defun p-search-kill-entity-at-point ()
   "Remove the entity at point, be it a prior or candidate generator."
   (interactive)
@@ -3219,6 +3223,7 @@ If PRESET is non-nil, set up session with PRESET."
     (p-search--remove-candidate-generator prior)
     (p-search--update-buffer-name-from-candidate-generators)))
 
+;;;###autoload
 (defun p-search-edit-dwim ()
   "Edit the entity at point, be it a prior or candidate generator."
   (interactive)
@@ -3227,6 +3232,7 @@ If PRESET is non-nil, set up session with PRESET."
   (when-let* ((prior (get-char-property (point) 'p-search-candidate-generator)))
     (p-search-dispatch-edit-candidate-generator prior)))
 
+;;;###autoload
 (defun p-search-next-item (&optional no-scroll)
   "Move the point to the next item.
 When NO-SCROLL is non-nil, don't scroll the window to show the
@@ -3250,6 +3256,7 @@ item's contents."
         (when (> next-item-line window-bottom-line)
           (scroll-up (1+ (- next-item-line window-bottom-line))))))))
 
+;;;###autoload
 (defun p-search-prev-item ()
   "Move the point to the next item"
   (interactive)
@@ -3270,7 +3277,7 @@ item's contents."
           (forward-line -1))
         (forward-line 1)))))
 
-
+;;;###autoload
 (defun p-search-add-candidate-generator ()
   "Add a new candidate generator to the current session."
   (interactive)
@@ -3286,6 +3293,7 @@ item's contents."
          (selected-generator (alist-get selection selections nil nil #'equal)))
     (p-search-dispatch-add-candidate-generator selected-generator)))
 
+;;;###autoload
 (defun p-search-add-dwim ()
   "Add a new thing depending on where point is."
   (interactive)
@@ -3299,6 +3307,7 @@ item's contents."
           (t
            (beep)))))
 
+;;;###autoload
 (defun p-search-decrease-preview-size (amt)
   "Decrease the window size by AMT."
   (interactive "p")
@@ -3306,12 +3315,14 @@ item's contents."
     (cl-decf p-search-document-preview-size amt)
     (p-search--reprint)))
 
+;;;###autoload
 (defun p-search-increase-preview-size (amt)
   "Increase the window size by AMT."
   (interactive "p")
   (cl-incf p-search-document-preview-size amt)
   (p-search--reprint))
 
+;;;###autoload
 (defun p-search-refresh-buffer ()
   "Redraw the buffer of current session."
   (interactive)
@@ -3319,6 +3330,7 @@ item's contents."
     (error "No current p-search session found"))
   (p-search--reprint))
 
+;;;###autoload
 (defun p-search-hard-refresh-buffer ()
   "Perform all recalculations and refresh buffer."
   (interactive)
@@ -3326,6 +3338,7 @@ item's contents."
     (error "No current p-search session found"))
   (p-search-restart-calculation))
 
+;;;###autoload
 (defun p-search-find-document ()
   "Find the file at the current point."
   (interactive)
@@ -3338,6 +3351,7 @@ item's contents."
       (goto-char (point-min))
       (forward-line (1- line-no)))))
 
+;;;###autoload
 (defun p-search-view-document ()
   "Find the document at current point, displaying it in read-only mode."
   (interactive)
@@ -3350,6 +3364,7 @@ item's contents."
     (unless buffer-read-only
       (read-only-mode))))
 
+;;;###autoload
 (defun p-search-display-document ()
   "Find the document at the current point, displaying it in the other window."
   (interactive)
@@ -3374,21 +3389,25 @@ item's contents."
     (when pos
       (goto-char pos))))
 
+;;;###autoload
 (defun p-search-jump-candidate-generators ()
   "Move point to the Candidate Generators section of the buffer."
   (interactive)
   (p-search--jump-to-section-id 'candidate-generators))
 
+;;;###autoload
 (defun p-search-jump-priors ()
   "Move point to the Priors section of the buffer."
   (interactive)
   (p-search--jump-to-section-id 'priors))
 
+;;;###autoload
 (defun p-search-jump-results ()
   "Move point to the Search Results section of the buffer."
   (interactive)
   (p-search--jump-to-section-id 'results))
 
+;;;###autoload
 (defun p-search-observe (prefix)
   "Perform observation on search result at point.
 If called with PREFIX, prompt user to input probability."
@@ -3404,18 +3423,21 @@ If called with PREFIX, prompt user to input probability."
     (puthash document (* p-obs (gethash document p-search-observations 1.0)) p-search-observations)
     (p-search-calculate)))
 
+;;;###autoload
 (defun p-search-add-preset (preset)
   "Prompt user to select PRESET and add to current session.
 Presets come from the variable `p-search-session-presets'."
   (interactive (list (p-search-prompt-preset)))
   (p-search-apply-preset preset))
 
+;;;###autoload
 (defun p-search-clear-peruse-data ()
   "Delete peruse data for current session."
   (interactive)
   (setq p-search-peruse-data nil)
   (p-search--reprint))
 
+;;;###autoload
 (defun p-search-show-session-preset (prefix)
   "Write the preset data of the current session to a separate buffer and display it.
 
@@ -3439,6 +3461,7 @@ register to which the preset value will be saved."
         (insert preset-str))
       (display-buffer buf)))))
 
+;;;###autoload
 (defun p-search-quit ()
   "Quit the current session, asking for confirmation."
   (interactive)
